@@ -7,7 +7,7 @@ from .data.normalization import compute_mean_std
 from .data.loader import robust_image_loader
 from .loss.delaunay_tv import DelaunayTVLoss
 from .metrics.segmentation_metrics import dice_coef, iou_metric
-from .model.unet import build_spiral_attention_unet
+from .model.unet import build_radial_attention_unet
 from .utils.mesh_sampler import sample_random_points
 
 
@@ -26,10 +26,10 @@ def main(config):
     H, W = X.shape[1], X.shape[2]
     pts = sample_random_points(H, W, num_points=config.get('num_points',64), seed=config.get('seed',42))
 
-    model = build_spiral_attention_unet(
+    model = build_radial_attention_unet(
         input_shape=(*target_size, 3),
         base_filters=config.get('base_filters',64),
-        spiral_levels=config.get('spiral_levels',8)
+        radial_levels=config.get('radial_levels',8)
     )
 
     model.compile(
