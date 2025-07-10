@@ -3,7 +3,7 @@ from tensorflow.keras.models import Model
 from .blocks import conv_block
 from .attention import attention_gate
 
-def build_radial_attention_unet(input_shape=(128,128,3), base_filters=32, spiral_levels=3):
+def build_radial_attention_unet(input_shape=(128,128,3), base_filters=32, radial_levels=3):
     inputs = Input(shape=input_shape)
     filters = [base_filters * (2**i) for i in range(4)]
     skips = []
@@ -12,7 +12,7 @@ def build_radial_attention_unet(input_shape=(128,128,3), base_filters=32, spiral
         x = conv_block(x, f)
         skips.append(x)
         x = MaxPooling2D()(x)
-    x = spiral_convolution(x, filters[-1]*2, spiral_levels)
+    x = radial_convolution(x, filters[-1]*2, radial_levels)
     for i in reversed(range(len(filters))):
         f = filters[i]
         x = UpSampling2D()(x)
