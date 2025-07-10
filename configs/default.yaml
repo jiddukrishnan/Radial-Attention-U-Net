@@ -1,0 +1,11 @@
+image_dir: 'add your path to the input images'
+mask_dir: 'add your path to the mask images'
+target_size: [64, 64]
+batch_size: 32
+epochs: 150
+learning_rate: 0.001
+base_filters: 64
+spiral_levels: 8
+lambda_del: 0.0005
+num_points: 64
+seed: 42
